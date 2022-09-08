@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:myinventory/ui/components/components.dart';
+import 'package:myinventory/ui/pages/login/components/components.dart';
 import 'package:myinventory/ui/pages/pages.dart';
-import 'package:provider/provider.dart';
-import 'components/components.dart';
-import '../../components/components.dart';
 
 class LoginPage extends StatefulWidget {
   final ILoginPresenter presenter;

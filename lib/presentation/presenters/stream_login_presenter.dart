@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:myinventory/datalayer/http/auth/iauth.dart';
 import 'package:myinventory/domain/helpers/domain_error.dart';
-import 'package:myinventory/domain/usecases/authentication.dart';
-import '../dependences/dependences.dart';
+import 'package:myinventory/presentation/dependences/dependences.dart';
+import 'package:myinventory/ui/pages/pages.dart';
 
 class LoginState {
   late String email;
@@ -18,10 +19,10 @@ class LoginState {
       passwordError == null;
 }
 
-class StreamLoginPresenter {
+class StreamLoginPresenter implements ILoginPresenter {
   final IValidation validation;
-  final IAuthentication authentication;
-  
+  final IAuth authentication;
+
   var _controller = StreamController<LoginState>.broadcast();
   var _state = LoginState();
 
@@ -45,13 +46,14 @@ class StreamLoginPresenter {
 
   void validateEmail(String email) {
     _state.email = email;
-    _state.emailError = validation.validate(field: 'email', value: email);
+    _state.emailError = validation.validate(field: 'email', value: email)!;
     _controller.add(_state);
   }
 
   void validatePassword(String password) {
     _state.password = password;
-    _state.passwordError = validation.validate(field: 'password', value: password);
+    _state.passwordError =
+        validation.validate(field: 'password', value: password)!;
     _controller.add(_state);
   }
 
@@ -59,7 +61,8 @@ class StreamLoginPresenter {
     _state.isLoading = true;
     _controller.add(_state);
     try {
-      await authentication.auth(AuthenticationParams(email: _state.email, secret: _state.password));
+      await authentication.signInWithEmailAndPassword(
+          email: _state.email, password: _state.password);
     } on DomainError catch (error) {
       _state.mainError = error.description;
     }
@@ -68,4 +71,5 @@ class StreamLoginPresenter {
   void dispose() {
     _controller.close();
   }
+  
 }
