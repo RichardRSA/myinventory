@@ -45,7 +45,7 @@ class FireAuth implements IAuth {
   Future<void> signOut() {
     try {
       return _firebaseAuth.signOut();
-    } on FirebaseAuthException catch (e) {
+    } catch (e){
       throw AuthError.UNEXPECTED_ERROR;
     }
   }
@@ -53,7 +53,7 @@ class FireAuth implements IAuth {
   User? getCurrentUser() {
     try {
       return _firebaseAuth.currentUser;
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       throw AuthError.UNEXPECTED_ERROR;
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:myinventory/ui/components/components.dart';
 import 'package:myinventory/ui/pages/login/components/components.dart';
@@ -6,10 +7,11 @@ import 'package:myinventory/ui/pages/pages.dart';
 
 class LoginPage extends StatefulWidget {
   final ILoginPresenter presenter;
+
   LoginPage(this.presenter);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -41,26 +43,28 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               LoginHeader(),
               Padding(
-                padding: EdgeInsets.all(32),
-                child: Provider(
-                  create: (_) => widget.presenter,
-                  child: Form(
-                      child: Column(
-                    children: <Widget>[
-                      EmailInput(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 32),
-                        child: PasswordInput(),
-                      ),
-                      LoginButton(),
-                      TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(Icons.person),
-                          label: Text('Criar conta'))
-                    ],
-                  )),
-                ),
-              )
+                  padding: EdgeInsets.only(top: 32, bottom: 16),
+                  child: Headline1(text: 'MyInventory')),
+              Padding(
+                  padding: EdgeInsets.all(32),
+                  child: Provider(
+                    create: (_) => widget.presenter,
+                    child: Form(
+                        child: Column(
+                      children: <Widget>[
+                        EmailInput(),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8, bottom: 32),
+                          child: PasswordInput(),
+                        ),
+                        LoginButton(),
+                        TextButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.person),
+                            label: Text('Criar conta'))
+                      ],
+                    )),
+                  ))
             ],
           ),
         );

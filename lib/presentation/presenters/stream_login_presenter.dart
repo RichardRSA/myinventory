@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:myinventory/datalayer/http/auth/auth_error.dart';
 import 'package:myinventory/datalayer/http/auth/iauth.dart';
-import 'package:myinventory/domain/helpers/domain_error.dart';
 import 'package:myinventory/presentation/dependences/dependences.dart';
 import 'package:myinventory/ui/pages/pages.dart';
 
@@ -13,10 +13,10 @@ class LoginState {
   late String mainError;
   bool isLoading = false;
   bool get isFormValid =>
-      email != null &&
-      emailError == null &&
-      password != null &&
-      passwordError == null;
+      email.isNotEmpty &&
+      emailError.isEmpty &&
+      password.isNotEmpty &&
+      passwordError.isEmpty;
 }
 
 class StreamLoginPresenter implements ILoginPresenter {
@@ -63,13 +63,12 @@ class StreamLoginPresenter implements ILoginPresenter {
     try {
       await authentication.signInWithEmailAndPassword(
           email: _state.email, password: _state.password);
-    } on DomainError catch (error) {
-      _state.mainError = error.description;
+    } on AuthError catch (error) {
+      _state.mainError = error.toString();
     }
   }
 
   void dispose() {
     _controller.close();
   }
-  
 }

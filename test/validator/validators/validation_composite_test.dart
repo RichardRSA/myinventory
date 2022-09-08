@@ -12,7 +12,7 @@ void main() {
   late FieldValidationSpy validationNull;
   late FieldValidationSpy validationEmpty;
   
-  void mockValidationNull(String error){
+  void mockValidationNull(String? error){
      when(validationNull.validate(any)).thenReturn(error);
   }
 

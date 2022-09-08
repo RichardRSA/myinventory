@@ -29,13 +29,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.5
   firebase_auth: ^3.7.0
   firebase_core: ^1.21.1
   http: ^0.13.3
   equatable:
   get:
+  provider:
 
 dev_dependencies:
   flutter_test:
