@@ -4,11 +4,11 @@
 
 1 - ✅ Adicionar o Firebase ao projeto;
 
-2 - Configurar o firebase no projeto android;
+2 - ✅ Configurar o firebase no projeto android;
 
-3 - Configurar o firebase no projeto iOS;
+3 - ✅ Configurar o firebase no projeto iOS;
 
-4 - Adicionar o Firebase Auth ao projeto;
+4 - ✅ Adicionar o Firebase Auth ao projeto;
 
 5 - Configurar o Firebase Auth no projeto android;
 
