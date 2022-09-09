@@ -15,6 +15,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
+  void _hideKeyboard() {
+    final currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -25,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(body: Builder(
       builder: (context) {
-        
         widget.presenter.isLoadingStream.listen((isLoading) {
           if (isLoading) {
             showLoading(context);
@@ -38,37 +45,40 @@ class _LoginPageState extends State<LoginPage> {
           showErrorMessage(context, error);
         });
 
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              LoginHeader(),
-              Padding(
-                  padding: EdgeInsets.only(top: 32, bottom: 16),
-                  child: Headline1(text: 'MyInventory')),
-              Padding(
-                  padding: EdgeInsets.all(32),
-                  child: Provider(
-                    create: (_) => widget.presenter,
-                    child: Form(
-                        child: Column(
-                      children: <Widget>[
-                        EmailInput(),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 32),
-                          child: PasswordInput(),
-                        ),
-                        LoginButton(),
-                        TextButton.icon(
-                            onPressed: () {},
-                            icon: Icon(Icons.person),
-                            label: Text('Criar conta'))
-                      ],
-                    )),
-                  ))
-            ],
-          ),
-        );
+        return SafeArea(
+            child: GestureDetector(
+                onTap: _hideKeyboard,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      LoginHeader(),
+                      Padding(
+                          padding: EdgeInsets.only(top: 8, bottom: 16),
+                          child: Headline1(text: 'MyInventory')),
+                      Padding(
+                          padding: EdgeInsets.all(32),
+                          child: Provider(
+                            create: (_) => widget.presenter,
+                            child: Form(
+                                child: Column(
+                              children: <Widget>[
+                                EmailInput(),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8, bottom: 32),
+                                  child: PasswordInput(),
+                                ),
+                                LoginButton(),
+                                TextButton.icon(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.person),
+                                    label: Text('Criar conta'))
+                              ],
+                            )),
+                          ))
+                    ],
+                  ),
+                )));
       },
     ));
   }

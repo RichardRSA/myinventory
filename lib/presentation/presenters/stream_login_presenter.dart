@@ -6,17 +6,13 @@ import 'package:myinventory/presentation/dependences/dependences.dart';
 import 'package:myinventory/ui/pages/pages.dart';
 
 class LoginState {
-  late String email;
-  late String password;
+  String? email;
+  String? password;
   late String emailError;
   late String passwordError;
-  late String mainError;
+  String? mainError;
   bool isLoading = false;
-  bool get isFormValid =>
-      email.isNotEmpty &&
-      emailError.isEmpty &&
-      password.isNotEmpty &&
-      passwordError.isEmpty;
+  bool get isFormValid => email != null && password != null;
 }
 
 class StreamLoginPresenter implements ILoginPresenter {
@@ -26,13 +22,13 @@ class StreamLoginPresenter implements ILoginPresenter {
   var _controller = StreamController<LoginState>.broadcast();
   var _state = LoginState();
 
-  Stream<String> get emailErrorStream =>
+  Stream<String?> get emailErrorStream =>
       _controller.stream.map((state) => state.emailError).distinct();
 
-  Stream<String> get passwordErrorStream =>
+  Stream<String?> get passwordErrorStream =>
       _controller.stream.map((state) => state.passwordError).distinct();
 
-  Stream<String> get mainErrorStream =>
+  Stream<String?> get mainErrorStream =>
       _controller.stream.map((state) => state.mainError).distinct();
 
   Stream<bool> get isFormValidStream =>
@@ -41,7 +37,8 @@ class StreamLoginPresenter implements ILoginPresenter {
   Stream<bool> get isLoadingStream =>
       _controller.stream.map((state) => state.isLoading).distinct();
 
-  StreamLoginPresenter({required this.validation, required this.authentication});
+  StreamLoginPresenter(
+      {required this.validation, required this.authentication});
 
   void validateEmail(String email) {
     _state.email = email;
@@ -56,13 +53,18 @@ class StreamLoginPresenter implements ILoginPresenter {
   }
 
   Future<void> auth() async {
-    _state.isLoading = true;
-    _controller.add(_state);
-    try {
-      await authentication.signInWithEmailAndPassword(
-          email: _state.email, password: _state.password);
-    } on AuthError catch (error) {
-      _state.mainError = error.toString();
+    if (_state.email == null || _state.password == null) {
+      _state.mainError = AuthError.UNEXPECTED_ERROR.toString();
+    } else {
+      _state.isLoading = true;
+      _controller.add(_state);
+      try {
+        await authentication.signInWithEmailAndPassword(email: _state.email.toString(), password: _state.password.toString());
+      } on AuthError catch (error) {
+        _state.mainError = error.toString();
+      }
+      _state.isLoading = false;
+      _controller.add(_state);
     }
   }
 
