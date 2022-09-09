@@ -1,7 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 import 'package:myinventory/validation/dependences/dependences.dart';
 
-class PasswordValidation implements IFieldValidation {
+class PasswordValidation extends Equatable implements IFieldValidation {
   final String field;
+
+  List get props => [field];
 
   PasswordValidation(this.field);
 

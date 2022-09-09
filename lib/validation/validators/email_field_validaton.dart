@@ -1,7 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 import 'package:myinventory/validation/dependences/dependences.dart';
 
-class EmailValidation implements IFieldValidation {
+class EmailValidation extends Equatable implements IFieldValidation {
   final String? field;
+
+  List get props => [field];
 
   EmailValidation(this.field);
 

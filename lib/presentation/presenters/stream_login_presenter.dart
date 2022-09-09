@@ -41,8 +41,7 @@ class StreamLoginPresenter implements ILoginPresenter {
   Stream<bool> get isLoadingStream =>
       _controller.stream.map((state) => state.isLoading).distinct();
 
-  StreamLoginPresenter(
-      {required this.validation, required this.authentication});
+  StreamLoginPresenter({required this.validation, required this.authentication});
 
   void validateEmail(String email) {
     _state.email = email;
@@ -52,8 +51,7 @@ class StreamLoginPresenter implements ILoginPresenter {
 
   void validatePassword(String password) {
     _state.password = password;
-    _state.passwordError =
-        validation.validate(field: 'password', value: password)!;
+    _state.passwordError = validation.validate(field: 'password', value: password)!;
     _controller.add(_state);
   }
 

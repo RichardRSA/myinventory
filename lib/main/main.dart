@@ -3,10 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import 'package:myinventory/firebase_options.dart';
 import 'package:myinventory/ui/components/components.dart';
-import 'package:myinventory/ui/pages/factories/pages/login/login_pages_factory.dart';
-
-import '../lib/firebase_options.dart';
+import 'factories/pages/pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
