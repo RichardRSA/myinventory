@@ -48,7 +48,6 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
 
   Future<void> auth() async {
     _isLoading.value = true;
-
       try {
         await authentication.signInWithEmailAndPassword(email: _email.toString(), password: _password.toString());
       } on AuthError catch (error) {
