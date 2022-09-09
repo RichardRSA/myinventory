@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myinventory/main/factories/pages/login/login.dart';
 
 import 'package:myinventory/ui/pages/login/login_page.dart';
-import '../../factories.dart';
 
 Widget makeLoginPage() {
-  return LoginPage(makeLoginPresenter());
+  return LoginPage(makeGetxLoginPresenter());
 }

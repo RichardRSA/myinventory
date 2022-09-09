@@ -34,7 +34,7 @@ dependencies:
   firebase_core: ^1.21.1
   http: ^0.13.3
   equatable:
-  get:
+  get: ^4.3.8
   provider:
 
 dev_dependencies:
