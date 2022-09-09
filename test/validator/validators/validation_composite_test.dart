@@ -37,9 +37,9 @@ void main() {
   });
 
   test('Should return the first error', () {
-    mockValidationNull('error_1');
+    mockValidationNull(null);
     mockValidationEmpty('error_2');
-    expect(sut.validate(field: 'any_field', value: 'any_value'), null);
+    expect(sut.validate(field: 'any_field', value: 'any_value'), 'error_2');
   });
   
 }

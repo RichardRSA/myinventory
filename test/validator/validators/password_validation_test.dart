@@ -10,10 +10,10 @@ import 'package:myinventory/validation/validators/validators.dart';
 */
 
 void main() {
-  late EmailValidation sut;
+  late PasswordValidation sut;
 
   setUp(() {
-    sut = EmailValidation('any_field');
+    sut = PasswordValidation('any_field');
   });
 
   test('Should return null if password is empty', () {
