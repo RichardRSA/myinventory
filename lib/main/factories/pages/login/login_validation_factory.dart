@@ -1,3 +1,5 @@
+import 'package:myinventory/main/builders/validation_builders.dart';
+
 import '../../../../presentation/dependences/dependences.dart';
 import '../../../../validation/dependences/dependences.dart';
 import '../../../../validation/validators/validators.dart';
@@ -8,9 +10,7 @@ IValidation makeLoginValidation() {
 
 List<IFieldValidation> makeLoginValidations() {
   return [
-    RequiredFieldValidation('email'),
-    EmailValidation('email'),
-    RequiredFieldValidation('password'),
-    PasswordValidation('password'),
+    ... ValidationBuilder.field('email').required().email().build(),
+    ... ValidationBuilder.field('password').required().password().build()
   ];
 }
