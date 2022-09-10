@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:myinventory/datalayer/http/auth/auth_error.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:myinventory/datalayer/http/auth/iauth.dart';
 import 'package:myinventory/domain/usecases/save_account.dart';
 import 'package:myinventory/presentation/dependences/dependences.dart';
@@ -16,20 +17,21 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   var _emailError = RxString('');
   var _passwordError = RxString('');
   var _mainError = RxString('');
+  var _navigateTo = RxString('');
   var _isFormValid = false.obs;
   var _isLoading = false.obs;
 
   Stream<String> get emailErrorStream => _emailError.stream;
   Stream<String> get passwordErrorStream => _passwordError.stream;
   Stream<String> get mainErrorStream => _mainError.stream;
+  Stream<String> get navigateToStream => _navigateTo.stream;
   Stream<bool> get isFormValidStream => _isFormValid.stream;
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
-  GetxLoginPresenter({
-    required this.validation, 
-    required this.authentication,
-    required this.saveAccount
-  });
+  GetxLoginPresenter(
+      {required this.validation,
+      required this.authentication,
+      required this.saveAccount});
 
   void validateEmail(String email) {
     _email = email;
@@ -54,15 +56,22 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
 
   Future<void> auth() async {
     _isLoading.value = true;
+
     try {
-      final userCredential = await authentication.signInWithEmailAndPassword(email: _email.toString(), password: _password.toString());
+      UserCredential userCredential =
+          await authentication.signInWithEmailAndPassword(
+              email: _email.toString(), password: _password.toString());
+
       final _token = await userCredential.user?.getIdToken();
-      if(_token == null || _token.isEmpty){
-        throw AuthError.UNEXPECTED_ERROR;
-      }
-      await saveAccount.save(_token);
-    } on AuthError catch (error) {
-      _mainError.value = error.toString();
+
+      await saveAccount.save(_token!);
+
+      _navigateTo.value = '/products';
+    } on FirebaseAuthException catch (e) {
+      _mainError.value = e.message!;
+      _isLoading.value = false;
+    } catch (e) {
+      _mainError.value = e.toString();
       _isLoading.value = false;
     }
   }

@@ -33,7 +33,8 @@ class App extends StatelessWidget {
       theme: makeAppTheme(),
       initialRoute: '/login',
       getPages: [
-        GetPage(name: '/login', page: makeLoginPage)
+        GetPage(name: '/login', page: makeLoginPage),
+        GetPage(name: '/products', page: () => Scaffold(body: Text('Produtos')))
       ],
     );
   }

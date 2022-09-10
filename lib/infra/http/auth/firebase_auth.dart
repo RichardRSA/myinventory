@@ -11,16 +11,14 @@ class FireAuth implements IAuth {
   Future<UserCredential> createUserWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      return await _firebaseAuth.createUserWithEmailAndPassword( 
+      return await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-        throw AuthError.ERROR_EMAIL_ALREADY_IN_USE;
-      } else {
-        throw AuthError.UNEXPECTED_ERROR;
-      }
+      throw e.code;
+    } catch (e) {
+      throw AuthError.UNEXPECTED_ERROR;
     }
   }
 
@@ -32,20 +30,18 @@ class FireAuth implements IAuth {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'ERROR_WRONG_PASSWORD') {
-        throw AuthError.ERROR_WRONG_PASSWORD;
-      } else if (e.code == 'ERROR_USER_NOT_FOUND') {
-        throw AuthError.ERROR_USER_NOT_FOUND;
-      } else {
-        throw AuthError.UNEXPECTED_ERROR;
-      }
+      throw e.code;
+    } catch (e) {
+      throw AuthError.UNEXPECTED_ERROR;
     }
   }
 
   Future<void> signOut() {
     try {
       return _firebaseAuth.signOut();
-    } catch (e){
+    } on FirebaseAuthException catch (e) {
+      throw e.code;
+    } catch (e) {
       throw AuthError.UNEXPECTED_ERROR;
     }
   }
@@ -53,6 +49,8 @@ class FireAuth implements IAuth {
   User? getCurrentUser() {
     try {
       return _firebaseAuth.currentUser;
+    } on FirebaseAuthException catch (e) {
+      throw e.code;
     } catch (e) {
       throw AuthError.UNEXPECTED_ERROR;
     }
