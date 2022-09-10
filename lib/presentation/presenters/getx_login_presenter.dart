@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
 import 'package:myinventory/datalayer/http/auth/auth_error.dart';
 import 'package:myinventory/datalayer/http/auth/iauth.dart';
+import 'package:myinventory/domain/usecases/save_account.dart';
 import 'package:myinventory/presentation/dependences/dependences.dart';
 import 'package:myinventory/ui/pages/pages.dart';
 
 class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   final IValidation validation;
   final IAuth authentication;
+  final ISaveAccount saveAccount;
 
   String? _email;
   String? _password;
@@ -23,7 +25,11 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   Stream<bool> get isFormValidStream => _isFormValid.stream;
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
-  GetxLoginPresenter({required this.validation, required this.authentication});
+  GetxLoginPresenter({
+    required this.validation, 
+    required this.authentication,
+    required this.saveAccount
+  });
 
   void validateEmail(String email) {
     _email = email;
@@ -40,21 +46,26 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   }
 
   void _validateForm() {
-    _isFormValid.value = _emailError.value.isEmpty == true
-    && _passwordError.value.isEmpty == true
-    && _email != null
-    && _password != null;
+    _isFormValid.value = _emailError.value.isEmpty == true &&
+        _passwordError.value.isEmpty == true &&
+        _email != null &&
+        _password != null;
   }
 
   Future<void> auth() async {
     _isLoading.value = true;
-      try {
-        await authentication.signInWithEmailAndPassword(email: _email.toString(), password: _password.toString());
-      } on AuthError catch (error) {
-        _mainError.value = error.toString();
+    try {
+      final userCredential = await authentication.signInWithEmailAndPassword(email: _email.toString(), password: _password.toString());
+      final _token = await userCredential.user?.getIdToken();
+      if(_token == null || _token.isEmpty){
+        throw AuthError.UNEXPECTED_ERROR;
       }
+      await saveAccount.save(_token);
+    } on AuthError catch (error) {
+      _mainError.value = error.toString();
       _isLoading.value = false;
+    }
   }
 
-  void dispose() {}
+  // void dispose() {}
 }

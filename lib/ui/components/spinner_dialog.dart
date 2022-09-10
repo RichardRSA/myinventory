@@ -12,7 +12,7 @@ void showLoading(BuildContext context) {
               children: <Widget>[
                 CircularProgressIndicator(),
                 SizedBox(height: 12),
-                Text('Carregando ...', textAlign: TextAlign.center)
+                Text('Aguarde ...', textAlign: TextAlign.center)
               ],
             )
           ],

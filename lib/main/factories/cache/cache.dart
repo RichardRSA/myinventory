@@ -1,0 +1,1 @@
+export './make_storage_adapter_cache.dart';
