@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:myinventory/datalayer/http/auth/iauth.dart';
-import 'package:myinventory/domain/usecases/save_account.dart';
+import 'package:myinventory/domain/usecases/isave_account.dart';
 import 'package:myinventory/presentation/dependences/dependences.dart';
 import '../../../../presentation/pages/login/login.dart';
 
