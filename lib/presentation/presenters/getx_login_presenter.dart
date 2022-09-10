@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myinventory/datalayer/http/auth/iauth.dart';
 import 'package:myinventory/domain/usecases/save_account.dart';
 import 'package:myinventory/presentation/dependences/dependences.dart';
-import 'package:myinventory/ui/pages/pages.dart';
+import '../../../../presentation/pages/login/login.dart';
 
 class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   final IValidation validation;
@@ -67,12 +67,11 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
       await saveAccount.save(_token!);
 
       _navigateTo.value = '/products';
-    } on FirebaseAuthException catch (e) {
-      _mainError.value = e.message!;
-      _isLoading.value = false;
     } catch (e) {
+      
       _mainError.value = e.toString();
       _isLoading.value = false;
+
     }
   }
 

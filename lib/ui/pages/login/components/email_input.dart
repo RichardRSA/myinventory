@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../pages.dart';
+import '../../../../presentation/pages/login/login.dart';
 
 class EmailInput extends StatelessWidget {
   @override

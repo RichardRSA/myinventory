@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import 'package:myinventory/ui/pages/pages.dart';
+import '../../../../presentation/pages/login/login.dart';
 import 'package:myinventory/ui/components/components.dart';
 import 'package:myinventory/ui/pages/login/components/components.dart';
 
