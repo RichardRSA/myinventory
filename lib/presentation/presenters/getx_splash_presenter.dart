@@ -1,23 +1,21 @@
 import 'package:get/get.dart';
 
-import 'package:myinventory/datalayer/usecases/usecases.dart';
+import '../../domain/usecases/usecases.dart';
+import '../../ui/pages/pages.dart';
+import '../mixins/mixins.dart';
 
-class GetxSplashPresenter implements ISplashPresenter {
-  final LocalLoadCurrentAccount loadCurrentAccount;
-  var _navigateTo = RxString('');
-  Stream<String> get navigateToStream => _navigateTo.stream;
+class GetxSplashPresenter extends GetxController with NavigationManager implements ISplashPresenter {
+  final ILoadCurrentAccount loadCurrentAccount;
+
   GetxSplashPresenter({required this.loadCurrentAccount});
-  Future<void> checkAccount() async {
+
+  Future<void> checkAccount({int durationInSeconds = 3}) async {
+    await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      final _token = await loadCurrentAccount.load();
-      _navigateTo.value = _token.isEmpty ? '/login' : '/products';
+      await loadCurrentAccount.load();
+      navigateTo = '/products';
     } catch (e) {
-      _navigateTo.value = '/login';
+      navigateTo = '/login';
     }
   }
-}
-
-abstract class ISplashPresenter {
-  Stream<String> get navigateToStream;
-  Future<void> checkAccount();
 }

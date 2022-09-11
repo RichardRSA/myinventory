@@ -1,6 +1,7 @@
-import '../../../datalayer/usecases/usecases.dart';
+import '../../../data/usecases/usecases.dart';
+import '../../../domain/usecases/usecases.dart';
 import '../factories.dart';
 
-LocalSaveAccount makeLocalSaveCurrentAccount() {
-  return LocalSaveAccount(saveSecureCacheStorage: makeLocalStorageAdapter());
-}
+ISaveCurrentAccount makeLocalSaveCurrentAccount() => LocalSaveCurrentAccount(
+  saveSecureCacheStorage: makeSecureStorageAdapter()
+);

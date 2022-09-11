@@ -3,7 +3,7 @@
 // import 'package:mockito/mockito.dart';
 // import 'package:test/test.dart';
 
-// import 'package:myinventory/datalayer/usecases/local_storage_adapter.dart';
+// import 'package:myinventory/data/usecases/local_storage_adapter.dart';
 
 // class FlutterSecureStorageSpy extends Mock implements FlutterSecureStorage {}
 

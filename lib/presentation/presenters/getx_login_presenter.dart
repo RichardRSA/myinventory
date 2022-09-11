@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:myinventory/datalayer/http/auth/iauth.dart';
-import 'package:myinventory/domain/usecases/isave_account.dart';
-import 'package:myinventory/presentation/dependences/dependences.dart';
+import '../../data/http/auth/iauth.dart';
+import '../../domain/usecases/isave_account.dart';
+import '../../presentation/dependences/dependences.dart';
 import '../../../../presentation/pages/login/login.dart';
 
 class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   final IValidation validation;
   final IAuth authentication;
-  final ISaveAccount saveAccount;
+  final ISaveCurrentAccount saveAccount;
 
   String? _email;
   String? _password;

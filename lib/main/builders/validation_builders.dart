@@ -1,7 +1,7 @@
-import 'package:myinventory/validation/dependences/dependences.dart';
-import 'package:myinventory/validation/validators/email_field_validaton.dart';
-import 'package:myinventory/validation/validators/password_field_validation.dart';
-import 'package:myinventory/validation/validators/required_field_validation.dart';
+import '../../validation/dependences/dependences.dart';
+import '../../validation/validators/email_field_validaton.dart';
+import '../../validation/validators/password_field_validation.dart';
+import '../../validation/validators/required_field_validation.dart';
 
 class ValidationBuilder {
   static ValidationBuilder? _instance;

@@ -1,3 +1,3 @@
-abstract class ILoadAccount {
-  Future<String> load();
+abstract class ILoadCurrentAccount {
+  Future<String?> load();
 }

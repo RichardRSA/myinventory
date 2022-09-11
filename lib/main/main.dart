@@ -31,8 +31,9 @@ class App extends StatelessWidget {
       title: 'myInventory',
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
-      initialRoute: '/login',
+      initialRoute: '/',
       getPages: [
+        GetPage(name: '/', page: makeSplashPage),
         GetPage(name: '/login', page: makeLoginPage),
         GetPage(name: '/products', page: () => Scaffold(body: Text('Produtos')))
       ],

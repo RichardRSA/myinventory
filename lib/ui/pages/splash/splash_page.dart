@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import 'splash.dart';
+import '../../mixins/mixins.dart';
+import './splash.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatelessWidget with NavigationManager {
   final ISplashPresenter presenter;
-  SplashPage({required this.presenter});
+
+  SplashPage({ required this.presenter });
+
   @override
   Widget build(BuildContext context) {
-    presenter.navigateToStream.listen((page) {
-      if (page.isNotEmpty == true) {
-        Get.offAllNamed(page);
-      }
-    });
+    presenter.checkAccount();
+
     return Scaffold(
-        appBar: AppBar(title: Text('MyInventory')),
-        body: Builder(builder: (context) {
-          return Center(child: CircularProgressIndicator());
-        }));
+      body: Builder(
+        builder: (context) {
+          handleNavigation(presenter.navigateToStream, clear: true);
+
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+    );
   }
 }
