@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../presentation/pages/login/login.dart';
-import 'package:myinventory/ui/components/components.dart';
-import 'package:myinventory/ui/pages/login/components/components.dart';
+import '../../../ui/components/components.dart';
+import '../../../ui/pages/login/components/components.dart';
 
 class LoginPage extends StatelessWidget {
   final ILoginPresenter presenter;
@@ -48,26 +48,28 @@ class LoginPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       LogoHeader(),
+                      Headline1(text: 'MyInventory'),
                       Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 16),
-                          child: Headline1(text: 'MyInventory')),
-                      Padding(
-                          padding: EdgeInsets.all(32),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
                           child: Provider(
                             create: (_) => presenter,
                             child: Form(
                                 child: Column(
                               children: <Widget>[
                                 EmailInput(),
+                                PasswordInput(),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 8, bottom: 32),
-                                  child: PasswordInput(),
-                                ),
-                                LoginButton(),
-                                TextButton.icon(
-                                    onPressed: presenter.goToSignUp,
-                                    icon: Icon(Icons.person),
-                                    label: Text('Criar conta'))
+                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TextButton.icon(
+                                            onPressed: presenter.goToSignUp,
+                                            icon: Icon(Icons.person),
+                                            label: Text('Criar conta')))),
+                                Padding(
+                                    padding: EdgeInsets.only(top: 48),
+                                    child: LoginButton()),
                               ],
                             )),
                           ))

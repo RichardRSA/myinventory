@@ -55,6 +55,9 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
   }
 
   Future<void> auth() async {
+
+    _mainError.value = '';
+
     _isLoading.value = true;
 
     try {
