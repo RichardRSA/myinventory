@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoginHeader extends StatelessWidget {
-  const LoginHeader({
+class LogoHeader extends StatelessWidget {
+  const LogoHeader({
     Key? key,
   }) : super(key: key);
 
@@ -9,7 +9,7 @@ class LoginHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 240,
-      margin: EdgeInsets.only(bottom: 32),
+      margin: EdgeInsets.only(bottom: 8),
       child: Image(image: AssetImage('lib/ui/assets/logo.png')),
     );
   }

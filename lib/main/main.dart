@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
-import 'package:myinventory/firebase_options.dart';
-import 'package:myinventory/ui/components/components.dart';
+import '../../firebase_options.dart';
+import '../../ui/components/components.dart';
 import 'factories/pages/pages.dart';
 
 void main() async {
@@ -31,10 +31,11 @@ class App extends StatelessWidget {
       title: 'myInventory',
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
-      initialRoute: '/',
+      initialRoute: '/login',
       getPages: [
         GetPage(name: '/', page: makeSplashPage),
         GetPage(name: '/login', page: makeLoginPage),
+        GetPage(name: '/signup', page: makeSignUpPage),
         GetPage(name: '/products', page: () => Scaffold(body: Text('Produtos')))
       ],
     );

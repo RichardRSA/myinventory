@@ -1,6 +1,7 @@
-abstract class ILoginPresenter {
+abstract class ISignUpPresenter {
   Stream<String> get emailErrorStream;
   Stream<String> get passwordErrorStream;
+  Stream<String> get confirmPasswordErrorStream;
   Stream<String> get mainErrorStream;
   Stream<String> get navigateToStream;
   Stream<bool> get isFormValidStream;
@@ -8,7 +9,7 @@ abstract class ILoginPresenter {
 
   void validateEmail(String email);
   void validatePassword(String password);
-  Future<void> auth();
-  void goToSignUp();
+  void validateConfirmPassword(String confirmPassword);
+  Future<void> signUp();
   void dispose();
 }
