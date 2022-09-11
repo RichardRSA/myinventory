@@ -74,6 +74,8 @@ class GetxSignUpPresenter extends GetxController implements ISignUpPresenter {
   }
 
   Future<void> signUp() async {
+    _mainError.value = '';
+
     _isLoading.value = true;
 
     try {
@@ -93,4 +95,8 @@ class GetxSignUpPresenter extends GetxController implements ISignUpPresenter {
   }
 
   // void dispose() {}
+
+  void goToLogin() {
+    _navigateTo.value = '/login';
+  }
 }

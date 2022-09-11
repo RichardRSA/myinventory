@@ -47,8 +47,13 @@ class SignUpPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.chevron_left_sharp),
+                        onPressed: presenter.goToLogin,
+                        alignment: Alignment.centerLeft,
+                      ),
                       LogoHeader(),
-                      Headline1(text: 'Criar conta'),
+                      Headline1(text: 'Crie sua conta'),
                       Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 32, vertical: 16),
