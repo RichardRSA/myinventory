@@ -2,7 +2,13 @@
 
 1 - Exibir os cards de produtos já adicionados;
 
-2 - Opção de filtrar por: Data, preço e ordem alfabética;
+2 - Opção de filtrar;
+
+2.1 - por: data;
+
+2.2 - por: preço;
+
+2.3 - por: ordem alfabética;
 
 3 - Ao clicar em algum card navegar para a tela de edição do mesmo;
 

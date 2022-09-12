@@ -33,19 +33,46 @@ class CloudStorage implements IStorage {
     }
   }
 
-  Future<List<QueryDocumentSnapshot<Object?>>?> getListFilteringValue(
-      String filter, String value, String? documentId, int? items) async {
+  Future<List<QueryDocumentSnapshot<Object?>>?> getListFilteringByValue(
+      String field, String value, String? documentId, int? items) async {
     try {
       items = items == null ? 10 : items;
       QuerySnapshot<Object?> _collection;
       if (documentId == null) {
-        _collection = await _getCollectionReference().where(filter, isEqualTo: value).limit(items).get();
+        _collection = await _getCollectionReference().where(field, isEqualTo: value).limit(items).get();
       } else {
         final _lastVisible =
             await _getCollectionReference().doc(documentId).get();
         _collection = await _getCollectionReference()
             .startAfter([_lastVisible])
-            .where(filter, isEqualTo: value)
+            .where(field, isEqualTo: value)
+            .limit(items)
+            .get();
+      }
+      final _listOfDocuments = _collection.docs;
+      if (_listOfDocuments.isNotEmpty) {
+        return _listOfDocuments.toList();
+      }
+      return null;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<List<QueryDocumentSnapshot<Object?>>?> getListOrdenedByValue(
+      String field, bool? descending, String? documentId, int? items) async {
+    try {
+      items = items == null ? 10 : items;
+      descending = descending == null ? false : descending;
+      QuerySnapshot<Object?> _collection;
+      if (documentId == null) {
+        _collection = await _getCollectionReference().orderBy(field, descending: descending).limit(items).get();
+      } else {
+        final _lastVisible =
+            await _getCollectionReference().doc(documentId).get();
+        _collection = await _getCollectionReference()
+            .startAfter([_lastVisible])
+            .orderBy(field, descending: descending)
             .limit(items)
             .get();
       }
