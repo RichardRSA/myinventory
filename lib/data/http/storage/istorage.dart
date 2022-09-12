@@ -7,9 +7,9 @@ abstract class IStorage {
 
   Future<String> save({required Object document});
 
-  Future<Object> update({
+  Future<void> update({
     required String uid,
-    required Object document,
+    required Map<String, Object?> document,
   });
 
   Future<void> delete({required String uid});

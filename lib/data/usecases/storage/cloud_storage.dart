@@ -37,7 +37,7 @@ class CloudStorage implements IStorage {
     try {
       final _query = await _getCollectionReference().get();
       final _listOfDocuments = _query.docs;
-      if(_listOfDocuments.isNotEmpty){
+      if (_listOfDocuments.isNotEmpty) {
         return _listOfDocuments.toList();
       }
       return null;
@@ -45,18 +45,17 @@ class CloudStorage implements IStorage {
       throw e;
     }
   }
-  
-  Future<Object> update({required String uid, required Object document}) {
-    // TODO: implement update
-    throw UnimplementedError();
+
+  Future<void> update({required String uid, required Map<String, Object?> document}) async {
+    try {
+      return await _getCollectionReference().doc(uid).update(document);
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<void> delete({required String uid}) {
     // TODO: implement delete
     throw UnimplementedError();
   }
-  
-  
-  
-
 }
