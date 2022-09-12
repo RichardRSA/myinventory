@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../data/http/auth/auth_error.dart';
 import '../../../data/http/auth/iauth.dart';
 
 class FireAuth implements IAuth {
@@ -18,7 +17,7 @@ class FireAuth implements IAuth {
     } on FirebaseAuthException catch (e) {
       throw e.code;
     } catch (e) {
-      throw AuthError.UNEXPECTED_ERROR;
+      throw e.toString();
     }
   }
 
@@ -32,7 +31,7 @@ class FireAuth implements IAuth {
     } on FirebaseAuthException catch (e) {
       throw e.code;
     } catch (e) {
-      throw AuthError.UNEXPECTED_ERROR;
+      throw e.toString();
     }
   }
 
@@ -42,7 +41,7 @@ class FireAuth implements IAuth {
     } on FirebaseAuthException catch (e) {
       throw e.code;
     } catch (e) {
-      throw AuthError.UNEXPECTED_ERROR;
+      throw e.toString();
     }
   }
 
@@ -52,7 +51,7 @@ class FireAuth implements IAuth {
     } on FirebaseAuthException catch (e) {
       throw e.code;
     } catch (e) {
-      throw AuthError.UNEXPECTED_ERROR;
+      throw e.toString();
     }
   }
 }
