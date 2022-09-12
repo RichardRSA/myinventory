@@ -13,18 +13,18 @@
 
 // 4 - Imagens dos produtos;
 
-class Products {
-  final String nome;
-  final String codigo;
-  final double preco;
-  final int quantidade;
-  final List<Uri> imagens;
+class Product {
+  final String name;
+  final String code;
+  final double price;
+  final int quantity;
+  final List<Uri> images;
 
-  Products({
-    required this.nome,
-    required this.codigo,
-    this.preco = 0.0,
-    this.quantidade = 0,
-    this.imagens = const []
+  Product({
+    required this.name,
+    required this.code,
+    this.price = 0.0,
+    this.quantity = 0,
+    this.images = const []
   });
 }

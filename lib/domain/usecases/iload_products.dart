@@ -1,3 +1,5 @@
-abstract class Products {
-  Future<List<Products>> load();
+import '../entities/entities.dart';
+
+abstract class LoadProducts {
+  Future<List<Product>> load();
 }
