@@ -13,16 +13,21 @@
 
 // 4 - Imagens dos produtos;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Product {
   final String name;
   final String code;
   final double price;
   final int quantity;
   final List<Uri> images;
+  final int update;
+  FieldValue get created => FieldValue.serverTimestamp();
 
   Product({
     required this.name,
     required this.code,
+    required this.update,
     this.price = 0.0,
     this.quantity = 0,
     this.images = const []

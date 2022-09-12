@@ -33,10 +33,23 @@ class CloudStorage implements IStorage {
     }
   }
 
-  Future<List<QueryDocumentSnapshot<Object?>>?> getList(String? filter) async {
+  Future<List<QueryDocumentSnapshot<Object?>>?> getListFilteringValue(
+      String filter, String value, String? documentId, int? items) async {
     try {
-      final _query = await _getCollectionReference().get();
-      final _listOfDocuments = _query.docs;
+      items = items == null ? 10 : items;
+      QuerySnapshot<Object?> _collection;
+      if (documentId == null) {
+        _collection = await _getCollectionReference().where(filter, isEqualTo: value).limit(items).get();
+      } else {
+        final _lastVisible =
+            await _getCollectionReference().doc(documentId).get();
+        _collection = await _getCollectionReference()
+            .startAfter([_lastVisible])
+            .where(filter, isEqualTo: value)
+            .limit(10)
+            .get();
+      }
+      final _listOfDocuments = _collection.docs;
       if (_listOfDocuments.isNotEmpty) {
         return _listOfDocuments.toList();
       }
