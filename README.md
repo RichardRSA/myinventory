@@ -1,16 +1,23 @@
-# myinventory
+![Dart Version](https://img.shields.io/static/v1?label=dart&message=2.18.0&color=00579d)
+![Flutter Version](https://img.shields.io/static/v1?label=flutter&message=3.3.1&color=42a5f5)
+![Null Safety](https://img.shields.io/static/v1?label=null-safety&message=done&color=success)
 
-A new Flutter project.
+# My Inventory
+Um aplicativo simples para o registro de um produto.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Bibliotecas e Ferramentas
+* Flutter
+* Firebase Auth
+* Firebase Core
+* Http
+* Equatable
+* Get
+* Provider
+* Flutter Secure Storage
+* LocalStorage
+* Cloud Firestore
+* Cached Network Image
+* Mockito
+* Test
+* Faker
+* Flutter Launcher Icons
