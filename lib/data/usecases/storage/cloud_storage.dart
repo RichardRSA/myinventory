@@ -46,7 +46,7 @@ class CloudStorage implements IStorage {
         _collection = await _getCollectionReference()
             .startAfter([_lastVisible])
             .where(filter, isEqualTo: value)
-            .limit(10)
+            .limit(items)
             .get();
       }
       final _listOfDocuments = _collection.docs;
