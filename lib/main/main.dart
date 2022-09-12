@@ -34,13 +34,13 @@ class App extends StatelessWidget {
       title: 'myInventory',
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
-      initialRoute: '/home',
+      initialRoute: '/product',
       getPages: [
         GetPage(name: '/', page: makeSplashPage),
         GetPage(name: '/login', page: makeLoginPage),
         GetPage(name: '/signup', page: makeSignUpPage),
         GetPage(name: '/home', page: makeHomePage),
-        GetPage(name: '/product', page: () => Scaffold(body: Text('Produtos')))
+        GetPage(name: '/product', page: makeProductPage)
       ],
     );
   }

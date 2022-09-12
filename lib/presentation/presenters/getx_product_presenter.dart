@@ -5,7 +5,7 @@ import '../../presentation/dependences/dependences.dart';
 import '../../../domain/entities/product.dart';
 import '../../../data/http/storage/istorage.dart';
 
-class GetxProductsPresenter extends GetxController implements IProductPresenter {
+class GetxProductPresenter extends GetxController implements IProductPresenter {
   final IValidation validation;
   final IStorage istorage;
 
@@ -39,7 +39,7 @@ class GetxProductsPresenter extends GetxController implements IProductPresenter 
   Stream<bool> get isFormValidStream => _isFormValid.stream;
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
-  GetxProductsPresenter({
+  GetxProductPresenter({
     required this.validation,
     required this.istorage
   });
