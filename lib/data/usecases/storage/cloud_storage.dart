@@ -17,16 +17,24 @@ class CloudStorage implements IStorage {
       throw e;
     }
   }
+
+  Future<Object?> getByUid({required String documentId}) async {
+    try {
+      CollectionReference _collectionReference =
+          _firebaseFirestore.collection(_reference);
+      final _document = await _collectionReference.doc(documentId).get();
+      if (_document.exists) {
+        return (_document).data();
+      }
+      return null;
+    } catch (e) {
+      throw e;
+    }
+  }
   
   @override
   Future<void> delete({required String uid}) {
     // TODO: implement delete
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<Object?> getByUid({required String documentId}) {
-    // TODO: implement getByUid
     throw UnimplementedError();
   }
   
