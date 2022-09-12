@@ -16,11 +16,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
+  
   final String name;
   final String code;
   final double price;
   final int quantity;
-  final List<Uri> images;
+  final String? image;
   final int update;
   FieldValue get created => FieldValue.serverTimestamp();
 
@@ -30,6 +31,17 @@ class Product {
     required this.update,
     this.price = 0.0,
     this.quantity = 0,
-    this.images = const []
+    this.image,
   });
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'code': code,
+    'update': update,
+    'price': price,
+    'quantity': quantity,
+    'image': image,
+    'created': created
+  };
+
 }
