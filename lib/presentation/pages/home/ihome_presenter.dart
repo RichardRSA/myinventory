@@ -6,7 +6,7 @@ abstract class IHomePresenter {
   Stream<bool> get isLoadingStream;
 
   void addNew();
-  void goToProductDetails(Product product);
+  void goToProductDetails(Product? product);
   void deleteProduct(Product product);
   
 }

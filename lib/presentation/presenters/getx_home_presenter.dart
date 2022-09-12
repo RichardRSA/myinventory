@@ -14,9 +14,8 @@ class GetxHomePresenter extends GetxController implements IHomePresenter {
 
   GetxHomePresenter();
   
-  @override
   void addNew() {
-    // TODO: implement addNew
+    _navigateTo.value = '/product';
   }
   
   @override

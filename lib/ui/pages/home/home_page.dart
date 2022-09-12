@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.sort_rounded),
-              tooltip: 'Open shopping cart',
+              tooltip: 'Data',
               onPressed: () {
                 // handle the press
               },
@@ -30,9 +30,7 @@ class HomePage extends StatelessWidget {
         floatingActionButton: new FloatingActionButton(
           child: new Icon(Icons.add),
           backgroundColor: Color.fromRGBO(53, 73, 94, 0.9),
-          onPressed: () {
-            // TODO add your logic here to add stuff
-          },
+          onPressed: presenter.addNew,
         ),
         body: Builder(
           builder: (context) {

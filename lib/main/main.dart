@@ -14,11 +14,11 @@ void main() async {
 
   Provider.debugCheckInvalidValueType = null;
 
+  CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
 
   runApp(App());
 }
@@ -34,7 +34,7 @@ class App extends StatelessWidget {
       title: 'myInventory',
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
-      initialRoute: '/product',
+      initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: makeSplashPage),
         GetPage(name: '/login', page: makeLoginPage),
