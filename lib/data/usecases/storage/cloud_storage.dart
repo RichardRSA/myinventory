@@ -8,11 +8,14 @@ class CloudStorage implements IStorage {
 
   CloudStorage(this._firebaseFirestore, this._reference);
 
+  CollectionReference _getCollectionReference() {
+    return _firebaseFirestore.collection(_reference);
+  }
+
   Future<String> save({required Object document}) async {
     try {
-      CollectionReference _collectionReference =
-          _firebaseFirestore.collection(_reference);
-      return (await _collectionReference.add(document)).id;
+      final _result = await _getCollectionReference().add(document);
+      return _result.id;
     } catch (e) {
       throw e;
     }
@@ -20,9 +23,7 @@ class CloudStorage implements IStorage {
 
   Future<Object?> getByUid({required String documentId}) async {
     try {
-      CollectionReference _collectionReference =
-          _firebaseFirestore.collection(_reference);
-      final _document = await _collectionReference.doc(documentId).get();
+      final _document = await _getCollectionReference().doc(documentId).get();
       if (_document.exists) {
         return (_document).data();
       }
@@ -31,22 +32,31 @@ class CloudStorage implements IStorage {
       throw e;
     }
   }
+
+  Future<List<QueryDocumentSnapshot<Object?>>?> getList() async {
+    try {
+      final _query = await _getCollectionReference().get();
+      final _listOfDocuments = _query.docs;
+      if(_listOfDocuments.isNotEmpty){
+        return _listOfDocuments.toList();
+      }
+      return null;
+    } catch (e) {
+      throw e;
+    }
+  }
   
-  @override
+  Future<Object> update({required String uid, required Object document}) {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
+
   Future<void> delete({required String uid}) {
     // TODO: implement delete
     throw UnimplementedError();
   }
   
-  @override
-  Future<DocumentSnapshot<Object?>> getList({required String uid}) {
-    // TODO: implement getList
-    throw UnimplementedError();
-  }
   
-  @override
-  Future<Object> update({required String uid, required Object document}) {
-    // TODO: implement update
-    throw UnimplementedError();
-  }
+  
+
 }

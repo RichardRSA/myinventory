@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../domain/entities/entities.dart';
-
 abstract class IStorage {
   Future<Object?> getByUid({required String documentId});
 
-  Future<DocumentSnapshot<Object?>> getList({required String uid});
+  Future<List<DocumentSnapshot<Object?>>?> getList();
 
   Future<String> save({required Object document});
 
