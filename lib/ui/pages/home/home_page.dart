@@ -12,8 +12,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Builder(
-      builder: (context) {
+    return Scaffold(
+      floatingActionButton: new FloatingActionButton(
+        child: new Icon(Icons.add),
+          onPressed: () {
+            // TODO add your logic here to add stuff
+          },
+      ),
+      body: Builder(builder: (context) {
         presenter.isLoadingStream.listen((isLoading) {
           if (isLoading) {
             showLoading(context);
@@ -32,12 +38,12 @@ class HomePage extends StatelessWidget {
           }
         });
 
-        return SafeArea(
-            child: ListView.builder(
+        return SafeArea(child: ListView.builder(
           itemBuilder: (BuildContext context, int index) => 
           ProductCard(),
           itemCount: 10,
         ));
+
       },
     ));
   }
