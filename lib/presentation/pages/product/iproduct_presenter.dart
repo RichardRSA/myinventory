@@ -11,6 +11,8 @@ abstract class IProductPresenter {
 
   void validateName(String name);
   void validateCode(String code);
+  void setPrice(double price);
+  void setQuantity(int quantity);
   void save();
   void goToHome();
   void pickImage();

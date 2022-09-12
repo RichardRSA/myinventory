@@ -10,6 +10,8 @@ IValidation makeProductValidation() {
 List<IFieldValidation> makeProductValidations() {
   return [
     ...ValidationBuilder.field('name').required().build(),
-    ...ValidationBuilder.field('code').required().build()
+    ...ValidationBuilder.field('code').required().build(),
+    ...ValidationBuilder.field('price').build(),
+    ...ValidationBuilder.field('quantity').build(),
   ];
 }

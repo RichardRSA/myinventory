@@ -13,8 +13,8 @@ class NameInput extends StatelessWidget {
           return TextFormField(
             decoration: InputDecoration(
                 labelText: 'Nome',
-                errorText: snapshot.data?.isEmpty == true ? null : snapshot.data),
-            obscureText: true,
+                errorText:
+                    snapshot.data?.isEmpty == true ? null : snapshot.data),
             onChanged: presenter.validateName,
           );
         });
