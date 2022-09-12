@@ -13,38 +13,53 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
+        appBar: AppBar(
+          title: Text('Meus produtos'),
+          backgroundColor: Color.fromRGBO(53, 73, 94, 0.9),
+          elevation: 0.0,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.sort_rounded),
+              tooltip: 'Open shopping cart',
+              onPressed: () {
+                // handle the press
+              },
+            ),
+          ],
+        ),
+        floatingActionButton: new FloatingActionButton(
+          child: new Icon(Icons.add),
+          backgroundColor: Color.fromRGBO(53, 73, 94, 0.9),
           onPressed: () {
             // TODO add your logic here to add stuff
           },
-      ),
-      body: Builder(builder: (context) {
-        presenter.isLoadingStream.listen((isLoading) {
-          if (isLoading) {
-            showLoading(context);
-          } else {
-            hideLoading(context);
-          }
-        });
+        ),
+        body: Builder(
+          builder: (context) {
+            presenter.isLoadingStream.listen((isLoading) {
+              if (isLoading) {
+                showLoading(context);
+              } else {
+                hideLoading(context);
+              }
+            });
 
-        presenter.mainErrorStream.listen((error) {
-          showErrorMessage(context, error);
-        });
+            presenter.mainErrorStream.listen((error) {
+              showErrorMessage(context, error);
+            });
 
-        presenter.navigateToStream.listen((page) {
-          if (page.isNotEmpty == true) {
-            Get.offAllNamed(page);
-          }
-        });
+            presenter.navigateToStream.listen((page) {
+              if (page.isNotEmpty == true) {
+                Get.offAllNamed(page);
+              }
+            });
 
-        return SafeArea(child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) => 
-          ProductCard(),
-          itemCount: 10,
+            return SafeArea(
+                child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) => ProductCard(),
+              itemCount: 10,
+            ));
+          },
         ));
-
-      },
-    ));
   }
 }
