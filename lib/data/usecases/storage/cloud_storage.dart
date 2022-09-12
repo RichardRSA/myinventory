@@ -33,7 +33,7 @@ class CloudStorage implements IStorage {
     }
   }
 
-  Future<List<QueryDocumentSnapshot<Object?>>?> getList() async {
+  Future<List<QueryDocumentSnapshot<Object?>>?> getList(String? filter) async {
     try {
       final _query = await _getCollectionReference().get();
       final _listOfDocuments = _query.docs;
@@ -46,7 +46,8 @@ class CloudStorage implements IStorage {
     }
   }
 
-  Future<void> update({required String uid, required Map<String, Object?> document}) async {
+  Future<void> update(
+      {required String uid, required Map<String, Object?> document}) async {
     try {
       return await _getCollectionReference().doc(uid).update(document);
     } catch (e) {
@@ -54,8 +55,11 @@ class CloudStorage implements IStorage {
     }
   }
 
-  Future<void> delete({required String uid}) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete({required String uid}) async {
+    try {
+      return await _getCollectionReference().doc(uid).delete();
+    } catch (e) {
+      throw e;
+    }
   }
 }
