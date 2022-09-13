@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../../../../domain/entities/entities.dart';
+
 class ProductCard extends StatelessWidget {
-  const ProductCard({ Key? key, }) : super(key: key);
+  const ProductCard({
+    Key? key,
+    required Product product,
+  })  : _product = product,
+        super(key: key);
+
+  final Product _product;
 
   @override
   Widget build(BuildContext context) {
@@ -12,18 +20,15 @@ class ProductCard extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            title: const Text('Product 1'),
-            subtitle: Text(
-              'Cód: 123456789',
-              style: TextStyle(color: Colors.black.withOpacity(0.6)),
-            ),
+            title: Text(_product.name),
+            subtitle: Text(_product.code,
+                style: TextStyle(color: Theme.of(context).primaryColorDark)),
             trailing: Icon(Icons.delete),
           ),
           ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: CachedNetworkImage(
-                  imageUrl:
-                      'https://firebasestorage.googleapis.com/v0/b/my-inventory-app-b8e4e.appspot.com/o/images%2Fproducts%2FnoImage.png?alt=media&token=b1dd175c-558f-4e74-b09a-bdfcd085652b',
+                  imageUrl: _product.image,
                   width: 360,
                   height: 204,
                   fit: BoxFit.fill)),
