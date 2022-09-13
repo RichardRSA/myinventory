@@ -87,7 +87,7 @@ class GetxSignUpPresenter extends GetxController implements ISignUpPresenter {
 
       await saveAccount.save(_token!);
 
-      _navigateTo.value = '/products';
+      _navigateTo.value = '/home';
     } catch (e) {
       _mainError.value = e.toString();
       _isLoading.value = false;

@@ -13,7 +13,7 @@ class GetxSplashPresenter extends GetxController with NavigationManager implemen
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       await loadCurrentAccount.load();
-      navigateTo = '/products';
+      navigateTo = '/home';
     } catch (e) {
       navigateTo = '/login';
     }

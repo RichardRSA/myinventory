@@ -69,7 +69,7 @@ class GetxLoginPresenter extends GetxController implements ILoginPresenter {
 
       await saveAccount.save(_token!);
 
-      _navigateTo.value = '/products';
+      _navigateTo.value = '/home';
     } catch (e) {
       
       _mainError.value = e.toString();

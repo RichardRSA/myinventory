@@ -60,7 +60,7 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
         update: DateTime.now().millisecondsSinceEpoch,
         price: _price!,
         quantity: _quantity!,
-        image: _image
+        // image: _image
       );
 
       if (_uid == null) {
