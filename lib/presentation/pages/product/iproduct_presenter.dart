@@ -7,6 +7,7 @@ abstract class IProductPresenter {
   Stream<String> get imageErrorStream;
   Stream<String> get mainErrorStream;
   Stream<String> get navigateToStream;
+  Stream<String> get pictureImageStream;
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 
@@ -19,5 +20,4 @@ abstract class IProductPresenter {
   void pickImage();
   void deleteImage();
   void dispose();
-  String getPictureUrl();
 }

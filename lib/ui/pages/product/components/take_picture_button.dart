@@ -20,17 +20,27 @@ class TakePictureButton extends StatelessWidget {
                   trailing: Icon(Icons.delete),
                   onTap: presenter.deleteImage,
                 ),
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: CachedNetworkImage(
-                        imageUrl: presenter.getPictureUrl(),
-                        width: 360,
-                        height: 204,
-                        fit: BoxFit.fill)),
-                ElevatedButton(
-                  onPressed: presenter.pickImage,
-                  child: const Icon(Icons.camera_alt),
-                )
+                StreamBuilder<String>(
+                    stream: presenter.pictureImageStream,
+                    builder: (context, pictureSnapshot) {
+                      if (pictureSnapshot.hasData &&
+                          Uri.parse(pictureSnapshot.data!).isAbsolute) {
+                        return ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: CachedNetworkImage(
+                                imageUrl: pictureSnapshot.data!,
+                                width: 360,
+                                height: 204,
+                                fit: BoxFit.fill));
+                      } else {
+                        return ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: ElevatedButton(
+                              onPressed: presenter.pickImage,
+                              child: const Icon(Icons.camera_alt),
+                            ));
+                      }
+                    }),
               ],
             ),
           );

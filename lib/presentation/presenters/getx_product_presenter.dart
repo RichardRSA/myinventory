@@ -18,13 +18,13 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
   String? _code;
   double? _price;
   int? _quantity;
-  String? _image;
 
   var _nameError = RxString('');
   var _codeError = RxString('');
   var _imageError = RxString('');
   var _mainError = RxString('');
   var _navigateTo = RxString('');
+  var _pictureImage = RxString('');
   var _priceError = RxDouble(0);
   var _quantityError = RxInt(0);
   var _isFormValid = false.obs;
@@ -35,6 +35,7 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
   Stream<String> get imageErrorStream => _imageError.stream;
   Stream<String> get mainErrorStream => _mainError.stream;
   Stream<String> get navigateToStream => _navigateTo.stream;
+  Stream<String> get pictureImageStream => _pictureImage.stream;
   Stream<double> get priceErrorStream => _priceError.stream;
   Stream<int> get quantityErrorStream => _quantityError.stream;
   Stream<bool> get isFormValidStream => _isFormValid.stream;
@@ -57,13 +58,17 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
       _price = _price == null ? 0 : _price;
       _quantity = _quantity == null ? 0 : _quantity;
 
+      _pictureImage.value = _pictureImage.value.isEmpty
+          ? 'https://firebasestorage.googleapis.com/v0/b/my-inventory-app-b8e4e.appspot.com/o/images%2Fproducts%2FnoImage.png?alt=media&token=b1dd175c-558f-4e74-b09a-bdfcd085652b'
+          : _pictureImage.value;
+
       Product _product = Product(
           name: _name!,
           code: _code!,
           update: DateTime.now().millisecondsSinceEpoch,
           price: _price!,
           quantity: _quantity!,
-          image: getPictureUrl());
+          image: _pictureImage.value);
 
       if (_uid == null) {
         await istorage.save(document: _product.toJson());
@@ -111,10 +116,10 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
       _isLoading.value = true;
       try {
         final storageRef = FirebaseStorage.instance.ref();
-        final productRef = storageRef.child(photo.name);
-        _image = await productRef.getDownloadURL();
+        final productRef = storageRef.child('product/' + photo.hashCode.toString());
         File file = File(photo.path);
         await productRef.putFile(file);
+        _pictureImage.value = await productRef.getDownloadURL();
       } catch (e) {
         _mainError.value = e.toString();
       }
@@ -122,15 +127,17 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
     }
   }
 
-  void deleteImage() {
-    _image = null;
-  }
-
-  String getPictureUrl() {
-    if (_image == null) {
-      return 'noImage.png';
-    } else {
-      return _image!;
+  void deleteImage() async {
+    _mainError.value = '';
+    _isLoading.value = true;
+    try {
+      final storageRef =
+          FirebaseStorage.instance.refFromURL(_pictureImage.value);
+      await storageRef.delete();
+      _pictureImage.value = '';
+    } catch (e) {
+      _mainError.value = e.toString();
     }
+    _isLoading.value = false;
   }
 }
