@@ -20,7 +20,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     _setQuery(Choice value) {
       return FirebaseFirestore.instance
         .collection('products')
@@ -29,28 +28,26 @@ class HomePage extends StatelessWidget {
             fromFirestore: (snapshot, _) => Product.fromJson(snapshot.data()!),
             toFirestore: (_product, _) => _product.toJson());
     }
-
     final _query = _setQuery(choices[0]);
-
     return Scaffold(
         appBar: AppBar(
           title: Text('Meus produtos'),
           backgroundColor: Theme.of(context).primaryColor,
           elevation: 0.0,
-          actions: <Widget>[
-            PopupMenuButton<Choice>(
-              icon: const Icon(Icons.sort_rounded),
-              onSelected: _setQuery,
-              itemBuilder: (BuildContext context) {
-                return choices.map((Choice choice) {
-                  return PopupMenuItem<Choice>(
-                    value: choice,
-                    child: Text(choice.title!),
-                  );
-                }).toList();
-              },
-            ),
-          ],
+          // actions: <Widget>[
+          //   PopupMenuButton<Choice>(
+          //     icon: const Icon(Icons.sort_rounded),
+          //     onSelected: _setQuery,
+          //     itemBuilder: (BuildContext context) {
+          //       return choices.map((Choice choice) {
+          //         return PopupMenuItem<Choice>(
+          //           value: choice,
+          //           child: Text(choice.title!),
+          //         );
+          //       }).toList();
+          //     },
+          //   ),
+          // ],
         ),
         floatingActionButton: new FloatingActionButton(
           child: new Icon(Icons.add),
@@ -58,17 +55,15 @@ class HomePage extends StatelessWidget {
           onPressed: presenter.addNew,
         ),
         body: Builder(builder: (context) {
-
           presenter.navigateToStream.listen((page) {
             if (page.isNotEmpty == true) {
               Get.offAllNamed(page);
             }
           });
-
           return SafeArea(
             child: FirestoreQueryBuilder<Product>(
                 query: _query,
-                pageSize: 10,
+                pageSize: 5,
                 builder: (context, snapshot, _) {
                   if (snapshot.isFetching) {
                     return Center(child: CircularProgressIndicator());

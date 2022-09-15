@@ -116,7 +116,8 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
       _isLoading.value = true;
       try {
         final storageRef = FirebaseStorage.instance.ref();
-        final productRef = storageRef.child('product/' + photo.hashCode.toString());
+        final productRef =
+            storageRef.child('product/' + photo.hashCode.toString());
         File file = File(photo.path);
         await productRef.putFile(file);
         _pictureImage.value = await productRef.getDownloadURL();
@@ -128,16 +129,18 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
   }
 
   void deleteImage() async {
-    _mainError.value = '';
-    _isLoading.value = true;
-    try {
-      final storageRef =
-          FirebaseStorage.instance.refFromURL(_pictureImage.value);
-      await storageRef.delete();
-      _pictureImage.value = '';
-    } catch (e) {
-      _mainError.value = e.toString();
+    if (_pictureImage.value.isNotEmpty) {
+      _mainError.value = '';
+      _isLoading.value = true;
+      try {
+        final storageRef =
+            FirebaseStorage.instance.refFromURL(_pictureImage.value);
+        await storageRef.delete();
+        _pictureImage.value = '';
+      } catch (e) {
+        _mainError.value = e.toString();
+      }
+      _isLoading.value = false;
     }
-    _isLoading.value = false;
   }
 }

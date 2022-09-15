@@ -23,7 +23,7 @@ class ProductCard extends StatelessWidget {
             title: Text(_product.name),
             subtitle: Text(_product.code,
                 style: TextStyle(color: Theme.of(context).primaryColorDark)),
-            trailing: Icon(Icons.delete),
+            trailing: Text(DateTime.fromMillisecondsSinceEpoch(_product.update).toString().substring(0, 19)),
           ),
           ClipRRect(
               borderRadius: BorderRadius.circular(4),
@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
                   imageUrl: _product.image,
                   width: 360,
                   height: 204,
-                  fit: BoxFit.fill)),
+                  fit: BoxFit.fill))
         ],
       ),
     );
