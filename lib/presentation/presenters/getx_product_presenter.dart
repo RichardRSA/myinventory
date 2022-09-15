@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 
 import '../pages/product/product.dart';
@@ -8,6 +9,7 @@ import '../../../data/http/storage/istorage.dart';
 class GetxProductPresenter extends GetxController implements IProductPresenter {
   final IValidation validation;
   final IStorage istorage;
+  final ImagePicker _picker = ImagePicker();
 
   String? _uid;
   String? _name;
@@ -102,7 +104,10 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
     _navigateTo.value = '/home';
   }
 
-  void pickImage() {
-    // TODO: implement pickImage
+  void pickImage() async {
+    // final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    // final List<XFile>? images = await _picker.pickMultiImage();
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    print(photo);
   }
 }

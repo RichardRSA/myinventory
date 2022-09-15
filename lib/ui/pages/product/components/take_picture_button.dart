@@ -12,7 +12,7 @@ class TakePictureButton extends StatelessWidget {
         builder: (context, snapshot) {
           return ElevatedButton(
             onPressed: presenter.pickImage,
-            child: const Icon(Icons.camera),
+            child: const Icon(Icons.camera_alt),
           );
         });
   }
