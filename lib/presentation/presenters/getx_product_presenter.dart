@@ -1,5 +1,7 @@
-import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../pages/product/product.dart';
 import '../../presentation/dependences/dependences.dart';
@@ -52,18 +54,16 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
     _isLoading.value = true;
 
     try {
-
       _price = _price == null ? 0 : _price;
       _quantity = _quantity == null ? 0 : _quantity;
 
       Product _product = Product(
-        name: _name!,
-        code: _code!,
-        update: DateTime.now().millisecondsSinceEpoch,
-        price: _price!,
-        quantity: _quantity!,
-        // image: _image
-      );
+          name: _name!,
+          code: _code!,
+          update: DateTime.now().millisecondsSinceEpoch,
+          price: _price!,
+          quantity: _quantity!,
+          image: getPictureUrl());
 
       if (_uid == null) {
         await istorage.save(document: _product.toJson());
@@ -105,9 +105,32 @@ class GetxProductPresenter extends GetxController implements IProductPresenter {
   }
 
   void pickImage() async {
-    // final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    // final List<XFile>? images = await _picker.pickMultiImage();
+    _mainError.value = '';
     final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    print(photo);
+    if (photo != null) {
+      _isLoading.value = true;
+      try {
+        final storageRef = FirebaseStorage.instance.ref();
+        final productRef = storageRef.child(photo.name);
+        _image = await productRef.getDownloadURL();
+        File file = File(photo.path);
+        await productRef.putFile(file);
+      } catch (e) {
+        _mainError.value = e.toString();
+      }
+      _isLoading.value = false;
+    }
+  }
+
+  void deleteImage() {
+    _image = null;
+  }
+
+  String getPictureUrl() {
+    if (_image == null) {
+      return 'noImage.png';
+    } else {
+      return _image!;
+    }
   }
 }

@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../data/usecases/storage/storage.dart';
+import '../../domain/entities/entities.dart';
 import '../pages/home/home.dart';
 
 class GetxHomePresenter extends GetxController implements IHomePresenter {
-  var _navigateTo = RxString('');
-  var _query = RxString('update');
+  final _navigateTo = RxString('');
+  final _listOfProducts = Rx<List<Product>>([]);
 
   Stream<String> get navigateToStream => _navigateTo.stream;
-  Stream<String> get queryStream => _query.stream;
+  Stream<List<Product>> get listOfProductsStream => _listOfProducts.stream;
 
   GetxHomePresenter();
 
@@ -23,7 +27,27 @@ class GetxHomePresenter extends GetxController implements IHomePresenter {
     // TODO: implement goToProductDetails
   }
 
-  void loadList() {
+  void loadList(choice) async {
+
+    var _filter = 'update';
+
+    if(choice != null){
+      _filter = choice.value!;
+    }
+
+    CloudStorage _cloudStorage = CloudStorage(FirebaseFirestore.instance, 'products');
+
+    final listOfQueries = await _cloudStorage.getListOrdenedByValue(_filter, true, null, 10);
+    
+    if(listOfQueries == null || listOfQueries.isEmpty){
+      _listOfProducts.value = [];
+    }else{
+        List<Product> _list = [];
+        listOfQueries.forEach((doc) {
+            _list.add(Product.fromJson(jsonDecode(jsonEncode(doc))));
+        });
+        _listOfProducts.value = _list;
+    }
 
   }
 }

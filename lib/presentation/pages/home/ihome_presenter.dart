@@ -2,10 +2,10 @@ import '../../../domain/entities/entities.dart';
 
 abstract class IHomePresenter {
   Stream<String> get navigateToStream;
-  Stream<String> get queryStream;
+  Stream<List<Product>> get listOfProductsStream;
 
   void addNew();
-  void loadList();
+  void loadList(Choice? choice);
   void goToProductDetails(Product? product);
   void deleteProduct(Product product);
 }

@@ -1,4 +1,5 @@
 abstract class IProductPresenter {
+
   Stream<String> get nameErrorStream;
   Stream<String> get codeErrorStream;
   Stream<double> get priceErrorStream;
@@ -16,5 +17,7 @@ abstract class IProductPresenter {
   void save();
   void goToHome();
   void pickImage();
+  void deleteImage();
   void dispose();
+  String getPictureUrl();
 }

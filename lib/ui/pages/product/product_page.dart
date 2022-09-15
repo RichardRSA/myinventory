@@ -73,8 +73,8 @@ class ProductPage extends StatelessWidget {
                                       QuantityInput(),
                                       TakePictureButton(),
                                       Padding(
-                                          padding: EdgeInsets.only(top: 64),
-                                          child: SaveButton()),
+                                        padding: EdgeInsets.only(top: 64),
+                                        child: SaveButton()),
                                     ],
                                   )),
                                 ))
