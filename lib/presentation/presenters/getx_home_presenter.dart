@@ -36,7 +36,7 @@ class GetxHomePresenter extends GetxController implements IHomePresenter {
 
     CloudStorage _cloudStorage = CloudStorage(FirebaseFirestore.instance, 'products');
 
-    final listOfQueries = await _cloudStorage.getListOrdenedByValue(_filter, true, null, 10);
+    final listOfQueries = await _cloudStorage.getListOrdenedByValue(_filter, choice?.getAsc(), null, 10);
     
     if(listOfQueries == null || listOfQueries.isEmpty){
       _listOfProducts.value = [];

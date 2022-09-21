@@ -5,10 +5,10 @@ import '../../../presentation/pages/home/home.dart';
 import '../../../domain/entities/entities.dart';
 import 'components/components.dart';
 
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'por data', value: 'update'),
-  const Choice(title: 'por preço', value: 'price'),
-  const Choice(title: 'por nome', value: 'name')
+List<Choice> choices = <Choice>[
+  Choice(title: 'por data', value: 'update'),
+  Choice(title: 'por preço', value: 'price'),
+  Choice(title: 'por nome', value: 'name')
 ];
 
 class HomePage extends StatelessWidget {
