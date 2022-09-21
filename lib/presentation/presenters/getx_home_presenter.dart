@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -44,7 +43,8 @@ class GetxHomePresenter extends GetxController implements IHomePresenter {
     }else{
         List<Product> _list = [];
         listOfQueries.forEach((doc) {
-            _list.add(Product.fromJson(jsonDecode(jsonEncode(doc))));
+            final _data = doc.data();
+            _list.add(Product.fromJson(_data as Map<String, dynamic>));
         });
         _listOfProducts.value = _list;
     }

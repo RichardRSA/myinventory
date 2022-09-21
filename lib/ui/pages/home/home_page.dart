@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutterfire_ui/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,15 +18,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _setQuery(Choice value) {
-      return FirebaseFirestore.instance
-        .collection('products')
-        .orderBy(value.value!, descending: true)
-        .withConverter<Product>(
-            fromFirestore: (snapshot, _) => Product.fromJson(snapshot.data()!),
-            toFirestore: (_product, _) => _product.toJson());
-    }
-    final _query = _setQuery(choices[0]);
+    presenter.loadList(Choice(title: 'por data', value: 'update'));
     return Scaffold(
         appBar: AppBar(
           title: Text('Meus produtos'),
@@ -61,31 +51,26 @@ class HomePage extends StatelessWidget {
             }
           });
           return SafeArea(
-            child: FirestoreQueryBuilder<Product>(
-                query: _query,
-                pageSize: 5,
-                builder: (context, snapshot, _) {
-                  if (snapshot.isFetching) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Text('Algo está errado! ${snapshot.error}');
-                  } else {
-                    return GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
-                        itemCount: snapshot.docs.length,
-                        itemBuilder: (context, index) {
-                          final hasEndReched = snapshot.hasMore &&
-                              index + 1 == snapshot.docs.length &&
-                              !snapshot.isFetchingMore;
-                          if (hasEndReched) {
-                            snapshot.fetchMore();
-                          }
-                          final _product = snapshot.docs[index].data();
-                          return ProductCard(product: _product);
-                        });
-                  }
-                }),
-          );
+              child: StreamBuilder<List<Product>>(
+                  stream: presenter.listOfProductsStream,
+                  initialData: [],
+                  builder: (ctx, snapshot) {
+                    if (snapshot.hasData) {
+                      final _list = snapshot.data;
+                      return ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              Divider(color: Colors.black),
+                          itemCount: _list == null ? 0 : _list.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            final _element = _list![index];
+                            return ProductCard(product: _element);
+                          });
+                    } else if (snapshot.hasError) {
+                      return Text('Algo está errado! ${snapshot.error}');
+                    } else {
+                      return Text('Algo está errado!');
+                    }
+                  }));
         }));
   }
 }
